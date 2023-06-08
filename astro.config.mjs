@@ -9,7 +9,7 @@ export default defineConfig({
   integrations: [
     markdoc(),
     starlight({
-      title: 'Threadsnappers AoC',
+      title: 'Threadsnappers',
       editLink: {
         baseUrl: 'https://github.com/Threadsnappers/advent-of-code-kotlin/edit/main/',
       },
