@@ -12,6 +12,7 @@ a text file with the name `Day01.txt`. For this I
 used the default `readInput()` function provided in
 the [AoC 2022 official repo template](https://github.com/kotlin-hands-on/advent-of-code-kotlin-template) which returns a `List<String>`.
 
+## Analyzing the input
 The input consists of numbers which represents the calorie count of
 the meals taken by the Elves. The inventory of one Elf is separated
 from the next by newlines. Let's take a look at the sample input to
@@ -41,6 +42,56 @@ calories.
 
 ## Part 1
 
+### Grouping the food of each Elf
+The input for the first two elves initially looks like this `["1000", "2000", "3000", "", "4000"]`. 
+Notice the blank string after 3000? That marks the 
+separator between two adjacent elves. The [`joinToString()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/join-to-string.html) function joins every element in the list to a String with each element separated by the `separator` which in this case is a space. 
+
+```kotlin 
+readInput("Day01").joinToString(separator = " ", transform = { it })
+```
+The result is a String which looks like 
+```
+1000 2000 3000  4000
+```
+The blank string after 3000 now has double space in the string.
+To group the calories of each Elf, the string is split at every double space. 
+```kotlin
+.split("  ") // Double space
+```
+The input has now been reduced to `["1000 2000 3000", "4000"]`. 
+
+### Computing calory count of Elves
+Next step is to once again split the
+string in each element and sum it up. The [`map()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map.html) function applies an operation to every element
+in a collection. Every element has to be processed like so:
+
+1. Split around every space. 
+```
+"1000 2000 3000"" -> ["1000", "2000", "3000"]
+```
+2. Convert every element in the list to `Int`s so that they can be added.
+```
+["1000", "2000", "3000"] -> [1000, 2000, 3000]
+```
+3. And finally, add them up to get a single value.
+```
+[1000, 2000, 3000] -> 6000
+```
+
+Using map, the above three steps can be done together.
+```kotlin
+.map { it.split(" ").sumOf { n -> n.toInt() } }
+```
+```kotlin
+readInput("Day01")
+    .joinToString (separator = " ", transform = { it })
+    .split("  ")
+    .map { it.split(" ").sumOf { n -> n.toInt() } }
+```
+
+Once the calorie count of all the elves has been computed, there's only one thing left to do -
+print the highest calory count. For this we can use the [`max()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/max.html) function.
 To find the highest calorie count, you need to compute the calorie count of
 every elf first. For this I used a few functions in the [Kotlin Collections API](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/)
 
@@ -51,22 +102,6 @@ val calories = readInput("Day01")
         .map { it.split(" ").sumOf { n -> n.toInt() } }
         .toMutableList()
 ```
-Let's analyze this part by part. The input for the first two elves initially looks like this
-`["1000", "2000", "3000", "", "4000"]`. Notice the blank string after 3000? That marks the 
-separator between two adjacent elves. The [`joinToString()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/join-to-string.html) function joins every element in the list to a String with each element separated by the `separator` which in this case is a space. The result is a String which
-looks like 
-```
-1000 2000 3000  4000
-```
-The blank string after 3000 now has double space in the string.
-To group the calories of each elf, the string is split at every double space. 
-
-The input has been reduced to `["1000 2000 3000", "4000"]`. Next step is to once again split the
-string in each element and sum it up. The [`map()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map.html) function applies the operation to every element
-in the collection to give us `[6000, 4000]`. This is stored as the list `calories`.
-
-Once the calorie count of all the elves has been computed, there's only one thing left to do -
-print the highest calory count. For this we can use the [`max()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/max.html) function.
 
 ```kotlin
 val part1 = calories.max()
@@ -93,7 +128,6 @@ fun main() {
     val calories = input.joinToString (separator = " ", transform = { it })
         .split("  ")
         .map { it.split(" ").sumOf { n -> n.toInt() } }
-        .toMutableList()
     val part1 = calories.max()
     val part2 = calories.sorted()
         .takeLast(3)

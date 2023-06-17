@@ -11,9 +11,10 @@ lets read the input! Once again I'll be using the `readInput()`method provided i
 ```kotlin
 val input = readInput("Day02")
 ```
-
+---
 ## Part 1
 
+### Analyzing the data
 The meaning of the input is completely different in part 1 and part 2 which is why
 I'm not explaining the input before solving each part.
 
@@ -39,21 +40,20 @@ For example in the first round, the opponent chooses Rock and you play Paper. Si
 Paper, you get 2 points. Paper beats Rock which means you won the round, giving 6 points for a
 total of 8.
 
+### [`fold()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/fold.html) -ing the data
 Instead of breaking the solution part by part, the whole process can be finished in just one
 operation on the input using the convenient [`fold()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/fold.html) function in the [Collections API](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/).
 
 ```kotlin
 val part1 = input.fold(0) { sum, l ->
-        sum + when ((l[2] - 'X') - (l[0] - 'A')) {
-            0 -> 3
-            1, -2 -> 6
-            else -> 0
-        } + (l[2] - 'W')
-    }
+    sum + ...
+}
 ```
 
 The initial value of `sum` is set to 0 and `l` represents each line in `input`. From here on we'll
 be using ASCII to help with the code logic. 
+
+### Computing the result
 
 ```kotlin
 when ((l[2] - 'X') - (l[0] - 'A')) {
@@ -87,6 +87,114 @@ gives 2 and Z gives three. An easy way to get that number would be to subtract t
 `'W'` from `l[2]`.
 
 Adding these to `sum` we reach the solution of part 1.
+
+### Solution
+```kotlin
+val part1 = input.fold(0) { sum, l ->
+    sum + when ((l[2] - 'X') - (l[0] - 'A')) {
+        0 -> 3
+        1, -2 -> 6
+        else -> 0
+    } + (l[2] - 'W')
+}
+```
+---
+## Part 2
+
+### Analyzing the data
+In part 2 we come to know that the second column of the strategy guide encodes the outcome of
+a round where X means loss, Y - draw and Z - win.
+
+```
+A Y     # rival - rock, result - draw => you - rock
+B X     # rival - paper, result - loss => you - rock 
+C Z     # rival - scissors, result - win => you - rock
+```
+
+The scoring system is same as before. The real challenge here is mapping the choice you need to
+make for achieving the outcome. Once again [`fold()`](#fold--ing-the-data) can be used to make the code concise.
+
+
+### Finding the result
+First we store the result of the round to a variable `res` where 0 represents loss, 1 means draw
+and 2 signifies a win.
+
+```kotlin
+val res = l[2] - 'X'
+```
+
+`res * 3` gives the score of the result of the round.
+
+### Deciding your move
+Using the number codes for rock paper and scissors from [computing the result](#computing-the-result)
+section of part 1 we can find the opponent's move which will decide yours. `l[0] - 'A'` returns the
+opponent's move in the number code.
+
+#### Loss
+When the result is a loss there are three possibilities:
+```
+Rival - Rock (0)    =>  You - Scissors (3 points)
+Rival - Paper (1)   =>  You - Rock (1 point)
+Rival - Scissor (2) =>  You - Paper (2 points)
+
+```
+Looking at this we can say that when the code is 0 (Rock), you get 3 points. Otherwise the score 
+is same as the number code of the opponent's move. This can be reduced to:
+```kotlin
+if (l[0] != 'A') l[0] - 'A' else 3
+```
+
+#### Draw
+A draw means the score is the same as the score of the opponent's move which is `code + 1`. For example
+when the opponent chooses Rock (0) to make it a draw you choose Rock too which gives 1 point.
+```kotlin
+l[0] - 'A' + 1
+```
+
+#### Win
+There are three ways you can win:
+```
+Rival - Rock (0)    =>  You - Paper (2 points)
+Rival - Paper (1)   =>  You - Scissors (3 point)
+Rival - Scissor (2) =>  You - Rock (1 points)
+```
+As long as the opponent doesn't choose Scissors (2), the score from the will be `code + 2`. When
+the opponent's choice is Scissors (0) the score becomes 1. 
+```kotlin
+if (l[0] != 'C') l[0] - 'A' + 2 else 1
+```
+
+#### Summing it up
+Wrapping the above conditionals inside `when` we get: 
+```kotlin
+when (res) {
+    0 -> if (l[0] != 'A') l[0] - 'A' else 3
+    1 -> l[0] - 'A' + 1
+    2 -> if (l[0] != 'C') l[0] - 'A' + 2 else 1
+    else -> 0
+}
+```
+The `else` block is never executed because all the possibilities have been exhausted. It is only
+to ensure that the compiler detects that it always returns an `Int`.
+
+Now that we have all the elements needed to compute the score, all that remains is to 
+[`fold()`](#fold--ing-the-data) the data once again to get the total score.
+
+### Solution
+
+
+```kotlin
+ val part2 = input.fold(0) { sum, l ->
+    val res = l[2] - 'X'
+    sum + res * 3 + when (res) {
+        0 -> if (l[0] != 'A') l[0] - 'A' else 3
+        1 -> l[0] - 'A' + 1
+        2 -> if (l[0] != 'C') l[0] - 'A' + 2 else 1
+        else -> 0
+    }
+}
+```
+Congrats on completing day 2 in Kotlin!~
 
 ## Full Solution
 ```kotlin
