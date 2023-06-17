@@ -65,7 +65,7 @@ when ((l[2] - 'X') - (l[0] - 'A')) {
 
 `l[0]` represents the first character which is the opponent's
 move (A, B or C). Likewise `l[2]` represents your move (X, Y or Z). We can assign number 0 for Rock, 
-1 for Paper and 2 for Scissors. `l[2] - 'X'` and `l[0] - 'A')` use ASCII codes to convert the input
+1 for Paper and 2 for Scissors. `l[2] - 'X'` and `l[0] - 'A'` use ASCII codes to convert the input
 to this form. 
 
 If the number of the opponent's move and your move turns out to be the same, the round ends in a draw
