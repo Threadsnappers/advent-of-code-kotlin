@@ -54,7 +54,11 @@ Let's analyze this part by part. The input for the first two elves initially loo
 `["1000", "2000", "3000", "", "4000"]`. Notice the blank string after 3000? That marks the 
 separator between two adjacent elves. The [`joinToString()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/join-to-string.html) function joins every element in the list to a String with each
 element separated by the `separator` which in this case is a space. The result is a String which
-looks like `1000 2000 3000  4000`. The blank string after 3000 now has double space in the string.
+looks like 
+```
+1000 2000 3000  4000
+```
+The blank string after 3000 now has double space in the string.
 To group the calories of each elf, the string is split at every double space. 
 
 The input has been reduced to `["1000 2000 3000", "4000"]`. Next step is to once again split the
@@ -99,7 +103,7 @@ fun main() {
 }
 ```
 
-💡[Open in Playground](https://pl.kotl.in/OdWNd1irT)
+[Open in Playground](https://pl.kotl.in/OdWNd1irT) [GitHub](https://github.com/Sasikuttan2163/AoC-2022-Solutions-In-Kotlin/blob/main/src/Day01.kt)
 
 *NOTE: My solutions aren't the most efficient or
 concise solutions you'll find. I try to make the 
