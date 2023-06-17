@@ -12,6 +12,7 @@ a text file with the name `Day01.txt`. For this I
 used the default `readInput()` function provided in
 the [AoC 2022 official repo template](https://github.com/kotlin-hands-on/advent-of-code-kotlin-template) which returns a `List<String>`.
 
+---
 ## Analyzing the input
 The input consists of numbers which represents the calorie count of
 the meals taken by the Elves. The inventory of one Elf is separated
@@ -40,6 +41,7 @@ gives the total calories in the snacks carried by each elf. Part 1 involves
 finding the number of calories being carried by the elf with the most
 calories.
 
+---
 ## Part 1
 
 ### Grouping the food of each Elf
@@ -84,39 +86,42 @@ Using map, the above three steps can be done together.
 .map { it.split(" ").sumOf { n -> n.toInt() } }
 ```
 ```kotlin
-readInput("Day01")
+val calories = readInput("Day01")
     .joinToString (separator = " ", transform = { it })
     .split("  ")
     .map { it.split(" ").sumOf { n -> n.toInt() } }
 ```
+The result is a `List` of `Int` with total calorie count carried by each Elf. Let's assign this
+to a variable `calories` so that it can be used again for part 2.
 
 Once the calorie count of all the elves has been computed, there's only one thing left to do -
 print the highest calory count. For this we can use the [`max()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/max.html) function.
-To find the highest calorie count, you need to compute the calorie count of
-every elf first. For this I used a few functions in the [Kotlin Collections API](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/)
-
-```kotlin
-val calories = readInput("Day01")
-        .joinToString (separator = " ", transform = { it })
-        .split("  ")
-        .map { it.split(" ").sumOf { n -> n.toInt() } }
-        .toMutableList()
-```
 
 ```kotlin
 val part1 = calories.max()
 ```
 
+### Solution
+
+```kotlin
+val calories = readInput("Day01")
+    .joinToString (separator = " ", transform = { it })
+    .split("  ")
+    .map { it.split(" ").sumOf { n -> n.toInt() } }
+val part1 = calories.max()
+```
+---
 ## Part 2
 
 Part 2 is pretty much the same as part 1 except that here you need to find the top three elves
 with most number of calorie count in their inventory and sum it up. For this I sorted the
 `calories` list and then summed up the last three elements.
 
+### Solution
 ```kotlin
 val part2 = calories.sorted()
-        .takeLast(3)
-        .sum()
+    .takeLast(3)
+    .sum()
 ```
 [`takeLast(n)`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/take-last.html)
 returns the last `n` elements in the list and [`sum()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/sum.html) adds it up. There you have it, we're one
@@ -137,7 +142,7 @@ fun main() {
 }
 ```
 
-[Open in Playground](https://pl.kotl.in/OdWNd1irT) [GitHub](https://github.com/Sasikuttan2163/AoC-2022-Solutions-In-Kotlin/blob/main/src/Day01.kt)
+[Open in Playground](https://pl.kotl.in/Z51h2eaMo) [GitHub](https://github.com/Sasikuttan2163/AoC-2022-Solutions-In-Kotlin/blob/main/src/Day01.kt)
 
 *NOTE: My solutions aren't the most efficient or
 concise solutions you'll find. I try to make the 

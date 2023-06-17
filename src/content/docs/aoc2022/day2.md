@@ -220,4 +220,4 @@ fun main() {
     part2.println()
 }
 ```
-[Open in Playground](https://pl.kotl.in/lpkdkiwtr) [GitHub](https://github.com/Sasikuttan2163/AoC-2022-Solutions-In-Kotlin/blob/main/src/Day02.kt)
+[Open in Playground](https://pl.kotl.in/4LsjxicmI) [GitHub](https://github.com/Sasikuttan2163/AoC-2022-Solutions-In-Kotlin/blob/main/src/Day02.kt)
