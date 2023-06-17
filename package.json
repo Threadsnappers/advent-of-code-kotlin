@@ -13,6 +13,6 @@
     "@astrojs/markdoc": "^0.3.2",
     "@astrojs/starlight": "^0.1.0",
     "@fontsource/source-code-pro": "^5.0.2",
-    "astro": "^2.6.1"
+    "astro": "^2.6.4"
   }
 }
