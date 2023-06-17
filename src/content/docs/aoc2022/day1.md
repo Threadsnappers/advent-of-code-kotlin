@@ -4,8 +4,9 @@ description: A solution to Day 1
 template: doc
 ---
 
-I'll walk you through my day 1 AoC solution.
-The first step in every solution is to of course
+In this post I'll be walking you through my [day 1](https://adventofcode.com/2022/day/1)
+[Advent of Code 2022](https://adventofcode.com/2022)
+solution. The first step in every solution is to of course
 read the input. Here the test input is stored in
 a text file with the name `Day01.txt`. For this I
 used the default `readInput()` function provided in
@@ -52,8 +53,7 @@ val calories = readInput("Day01")
 ```
 Let's analyze this part by part. The input for the first two elves initially looks like this
 `["1000", "2000", "3000", "", "4000"]`. Notice the blank string after 3000? That marks the 
-separator between two adjacent elves. The [`joinToString()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/join-to-string.html) function joins every element in the list to a String with each
-element separated by the `separator` which in this case is a space. The result is a String which
+separator between two adjacent elves. The [`joinToString()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/join-to-string.html) function joins every element in the list to a String with each element separated by the `separator` which in this case is a space. The result is a String which
 looks like 
 ```
 1000 2000 3000  4000
@@ -62,7 +62,7 @@ The blank string after 3000 now has double space in the string.
 To group the calories of each elf, the string is split at every double space. 
 
 The input has been reduced to `["1000 2000 3000", "4000"]`. Next step is to once again split the
-string in each element and sum it up. The `map` function applies the operation to every element
+string in each element and sum it up. The [`map()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map.html) function applies the operation to every element
 in the collection to give us `[6000, 4000]`. This is stored as the list `calories`.
 
 Once the calorie count of all the elves has been computed, there's only one thing left to do -
@@ -84,7 +84,7 @@ val part2 = calories.sorted()
         .sum()
 ```
 [`takeLast(n)`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/take-last.html)
-returns the last `n` elements in the list and `sum()` adds it up. There you have it, we're one
+returns the last `n` elements in the list and [`sum()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/sum.html) adds it up. There you have it, we're one
 day clear of the 25 day advent! 🎉
 ## Full Solution
 ```kotlin
