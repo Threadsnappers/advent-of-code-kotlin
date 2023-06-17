@@ -1,5 +1,5 @@
 ---
-title: Day 1 - Calorie Counting
+title: Day 1 - Calorie Counting 🍗 
 description: A solution to Day 1
 template: doc
 ---
@@ -68,6 +68,20 @@ print the highest calory count. For this we can use the [`max()`](https://kotlin
 val part1 = calories.max()
 ```
 
+## Part 2
+
+Part 2 is pretty much the same as part 1 except that here you need to find the top three elves
+with most number of calorie count in their inventory and sum it up. For this I sorted the
+`calories` list and then summed up the last three elements.
+
+```kotlin
+val part2 = calories.sorted()
+        .takeLast(3)
+        .sum()
+```
+[`takeLast(n)`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/take-last.html)
+returns the last `n` elements in the list and `sum()` adds it up. There you have it, we're one
+day clear of the 25 day advent! 🎉
 ## Full Solution
 ```kotlin
 fun main() {
@@ -85,6 +99,7 @@ fun main() {
 }
 ```
 
+💡[Open in Playground](https://pl.kotl.in/OdWNd1irT)
 
 *NOTE: My solutions aren't the most efficient or
 concise solutions you'll find. I try to make the 
