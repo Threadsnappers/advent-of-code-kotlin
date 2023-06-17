@@ -55,14 +55,6 @@ be using ASCII to help with the code logic.
 
 ### Computing the result
 
-```kotlin
-when ((l[2] - 'X') - (l[0] - 'A')) {
-    0 -> 3
-    1, -2 -> 6
-    else -> 0
-}
-```
-
 `l[0]` represents the first character which is the opponent's
 move (A, B or C). Likewise `l[2]` represents your move (X, Y or Z). We can assign number 0 for Rock, 
 1 for Paper and 2 for Scissors. `l[2] - 'X'` and `l[0] - 'A'` use ASCII codes to convert the input
@@ -80,11 +72,19 @@ Finally, if the difference between the codes turns out to be anything else, the 
 giving 0 points.
 
 ```kotlin
-(l[2] - 'W')
+when ((l[2] - 'X') - (l[0] - 'A')) {
+    0 -> 3
+    1, -2 -> 6
+    else -> 0
+}
 ```
 The only thing left is to add the points of our move as per the scheme. X gives one point, Y
 gives 2 and Z gives three. An easy way to get that number would be to subtract the ASCII of 
 `'W'` from `l[2]`.
+
+```kotlin
+(l[2] - 'W')
+```
 
 Adding these to `sum` we reach the solution of part 1.
 
