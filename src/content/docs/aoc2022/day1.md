@@ -144,6 +144,8 @@ fun main() {
 
 [Open in Playground](https://pl.kotl.in/Z51h2eaMo) [GitHub](https://github.com/Sasikuttan2163/AoC-2022-Solutions-In-Kotlin/blob/main/src/Day01.kt)
 
-*NOTE: My solutions aren't the most efficient or
+:::note[Note]
+My solutions aren't the most efficient or
 concise solutions you'll find. I try to make the 
-logic clear while keeping the code readable.*
+logic clear while keeping the code readable.
+:::

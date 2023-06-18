@@ -1,6 +1,6 @@
 ---
 title: Day 2 - Rock Paper Scissors ✂️
-description: A solution to Day 1
+description: A solution to Day 2
 template: doc
 ---
 In this post I'll be explaining my [day 2](https://adventofcode.com/2022/day/2)
