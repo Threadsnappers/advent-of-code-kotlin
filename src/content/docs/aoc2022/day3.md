@@ -144,6 +144,93 @@ val part1 = input.sumOf { l ->
 }
 ```
 ---
+
+## Part 2
+
+Looks like the Elves are facing another problem - this time they seem to have lost their
+group badges. Elves are divided into groups of three and assigned a badge depending on
+the item common by all three of them.
+
+```
+vJrwpWtwJgWrhcsFMMfFFhFp
+jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+PmmdzqPrVvPwwTWBwg
+```
+This is the first group in the sample data. Their badge is `r` because that's the only
+item appearing in the rucksacks of all three Elves.
+
+Part 2 involves summing up the priorities of the badges.
+
+### Finding the common item
+
+Following the same principle we used in the [part 1](#finding-the-common-item), we can
+use sets to find the intersection in the three item `Set`s. This time we'll need two
+intersect calls. Assuming we have the three rucksacks available as a `List<String>`
+we can implement this like so:
+```kotlin
+list[0].toSet()
+    .intersect(list[1].toSet())
+    .intersect(list[2].toSet())
+```
+:::tip[Infix functions!]
+An alternate way to make the code a little more cleaner, is to use an
+[infix function](https://kotlinlang.org/docs/functions.html#infix-notation) to wrap
+`intersect()`. Let's call it `intersectionWith()` which is an extension function
+of `Set<Char>`, takes a `Set<Char>` as a parameter and returns a `Set<Char>`.
+
+```kotlin
+infix fun Set<Char>.intersectionWith(set2: Set<Char>): Set<Char> = intersect(set2)
+```
+Now you can use this to find the intersection. 
+```kotlin
+(list[0].toSet() intersectionWith list[1].toSet() intersectionWith list[2].toSet())
+```
+:::
+Since it is given that there'll be only one item in common, we only need to take the first
+element of the Set and find its priority, just like how we did in part 1.
+```kotlin
+list[0].toSet()
+    .intersect(list[1].toSet())
+    .intersect(list[2].toSet())
+    .first()
+    .let {
+        if (it.isLowerCase()) it - 'a' + 1 else it - 'A' + 27
+    }
+```
+All that remains is to divide the Elves into groups of three.
+### Dividing Elves into groups
+
+Splitting the input into groups of three can be done with the 
+[`chunked()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/chunked.html)
+function in the [Collections API](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/).
+
+```kotlin
+input.chunked(3)
+```
+### Summing it up
+Finally, using [`sumOf()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/sum-of.html)
+we can find the total of all the priorities.
+```kotlin
+input.chunked(3)
+    .sumOf { list ->
+        list[0].toSet().intersect(list[1].toSet()).intersect(list[2].toSet()).first().let {
+            if (it.isLowerCase()) it - 'a' + 1 else it - 'A' + 27
+        }
+    }
+```
+### Solution
+```kotlin
+val part2 = input.chunked(3)
+    .sumOf { list ->
+        list[0].toSet().intersect(list[1].toSet()).intersect(list[2].toSet()).first().let {
+            if (it.isLowerCase()) it - 'a' + 1 else it - 'A' + 27
+        }
+    }
+```
+Hats off to you for conquering day 4 of Advent of Code! Well done!
+
+---
+
 ## Full Solution
 ```kotlin
 fun main() {
@@ -169,3 +256,5 @@ fun main() {
     part2.println()
 }
 ```
+[Open in Playground](https://pl.kotl.in/bQ-TNt2JY)
+[GitHub](https://github.com/Sasikuttan2163/AoC-2022-Solutions-In-Kotlin/blob/main/src/Day03.kt)
