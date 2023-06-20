@@ -13,6 +13,8 @@ jobs:
         uses: octokit/request-action@v2.x
         with:
           route: POST /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers
-          reviewers: Sasiukttan2163, TheChilledBuffalo
+          reviewers: |
+            Sasikuttan2163
+            TheChilledBuffalo
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
