@@ -173,18 +173,16 @@ list[0].toSet()
     .intersect(list[2].toSet())
 ```
 :::tip[Infix functions!]
-An alternate way to make the code a little more cleaner, is to use an
-[infix function](https://kotlinlang.org/docs/functions.html#infix-notation) to wrap
-`intersect()`. Let's call it `intersectionWith()` which is an extension function
-of `Set<Char>`, takes a `Set<Char>` as a parameter and returns a `Set<Char>`.
+An alternate way to make the code a little more cleaner, is to use the
+[infix version](https://kotlinlang.org/docs/functions.html#infix-notation) of
+`intersect()`. 
 
+This way the code can be written as:
 ```kotlin
-infix fun Set<Char>.intersectionWith(set2: Set<Char>): Set<Char> = intersect(set2)
+(list[0].toSet() intersect list[1].toSet() intersect list[2].toSet())
 ```
-Now you can use this to find the intersection. 
-```kotlin
-(list[0].toSet() intersectionWith list[1].toSet() intersectionWith list[2].toSet())
-```
+The outermost brackets are for making sure that the statements inside are
+executed first before proceeding with the rest of the call chain.
 :::
 Since it is given that there'll be only one item in common, we only need to take the first
 element of the Set and find its priority, just like how we did in part 1.
@@ -229,7 +227,7 @@ val part2 = input.chunked(3)
 ```
 Hats off to you for conquering day 3 of Advent of Code! Well done!
 
----
+
 
 ## Full Solution
 ```kotlin
