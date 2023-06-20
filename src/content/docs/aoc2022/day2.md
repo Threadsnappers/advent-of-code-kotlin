@@ -194,7 +194,7 @@ Now that we have all the elements needed to compute the score, all that remains 
     }
 }
 ```
-Congrats on completing day 2 in Kotlin!~
+Congrats on completing day 2 in Kotlin!
 
 ## Full Solution
 ```kotlin
