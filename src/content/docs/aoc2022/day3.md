@@ -227,7 +227,7 @@ val part2 = input.chunked(3)
         }
     }
 ```
-Hats off to you for conquering day 4 of Advent of Code! Well done!
+Hats off to you for conquering day 3 of Advent of Code! Well done!
 
 ---
 
