@@ -1,0 +1,34 @@
+name: Add Reviewers to Pull Request
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  add_reviewers:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get Organization Owners
+        id: owners
+        run: |
+          owners=$(curl -s -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
+          https://api.github.com/orgs/{your_organization}/owners | jq -r '.[].login')
+          echo "::set-output name=owners::$owners"
+
+      - name: Get Pull Request Author
+        id: author
+        run: |
+          author=$(curl -s -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
+          https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }} \
+          | jq -r '.user.login')
+          echo "::set-output name=author::$author"
+
+      - name: Add Reviewers
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers
+          reviewers: |
+            ${{ steps.owners.outputs.owners | split("\n") | map(select(. != steps.author.outputs.author)) | join("\n") }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
