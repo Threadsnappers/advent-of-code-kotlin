@@ -35,7 +35,8 @@ jobs:
               reviewers+=("$owner")
             fi
           done
-          echo "::set-output name=reviewers::${reviewers[*]}"
+          formatted_reviewers=$(jq -n --argjson arr "${reviewers[*]}" '$arr')
+          echo "::set-output name=reviewers::$formatted_reviewers"
 
       - name: Add Reviewers
         uses: octokit/request-action@v2.x
