@@ -9,31 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Get Pull Request Authors
-        id: authors
-        run: |
-          echo "::set-output name=authors::$(jq -r '.pull_request.user.login' $GITHUB_EVENT_PATH)"
-
-      - name: Get Organization Members
-        id: org_members
-        run: |
-          echo "::set-output name=members::$(jq -r '.organization.login' $GITHUB_EVENT_PATH)"
-
-      - name: Add Reviewers
-        id: add_reviewers
-        run: |
-          reviewers=$(jq -r '.pull_request.user.login' $GITHUB_EVENT_PATH)
-          members=$(jq -r '.organization.login' $GITHUB_EVENT_PATH)
-          reviewers=$(echo "$members" | grep -vF "$reviewers" | tr '\n' ',' | sed 's/,$//' | sed "s/,/'\",\"'/g")
-          echo "::set-output name=reviewers::'[$reviewers]'"
-
-      - name: Request Reviewers
-        uses: octokit/request-action@v2.x
+      - name: Add all organization members except pull request authors to review
+        uses: actions/github-script@v3
         with:
-          route: POST /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers
-          reviewers: ${{ steps.add_reviewers.outputs.reviewers }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          script: |
+            const allMembers = await github.getOrganizationMembers();
+            const pullRequestAuthors = await github.getPullRequestReviewers();
+            const reviewers = allMembers.filter(member => !pullRequestAuthors.includes(member.login));
+            github.addPullRequestReviewers(reviewers);
