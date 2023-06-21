@@ -9,39 +9,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get Organization Owners
-        id: owners
-        run: |
-          owners=$(curl -s -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
-          https://api.github.com/orgs/Threadsnappers/members?role=admin | jq -r '.[].login')
-          echo "::set-output name=owners::$owners"
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-      - name: Get Pull Request Author
-        id: author
+      - name: Get Pull Request Authors
+        id: authors
         run: |
-          author=$(curl -s -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
-          https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }} \
-          | jq -r '.user.login')
-          echo "::set-output name=author::$author"
+          echo "::set-output name=authors::$(jq -r '.pull_request.user.login' $GITHUB_EVENT_PATH)"
 
-      - name: Filter Reviewers
-        id: reviewers
+      - name: Get Organization Members
+        id: org_members
         run: |
-          owners=($(echo "${{ steps.owners.outputs.owners }}"))
-          author="${{ steps.author.outputs.author }}"
-          reviewers=()
-          for owner in "${owners[@]}"; do
-            if [[ "$owner" != "$author" ]]; then
-              reviewers+=("$owner")
-            fi
-          done
-          formatted_reviewers=$(jq -n --argjson arr "${reviewers[*]}" '$arr')
-          echo "::set-output name=reviewers::$formatted_reviewers"
+          echo "::set-output name=members::$(jq -r '.organization.login' $GITHUB_EVENT_PATH)"
 
       - name: Add Reviewers
+        id: add_reviewers
+        run: |
+          reviewers=$(jq -r '.pull_request.user.login' $GITHUB_EVENT_PATH)
+          members=$(jq -r '.organization.login' $GITHUB_EVENT_PATH)
+          reviewers=$(echo "$members" | grep -vF "$reviewers" | tr '\n' ',' | sed 's/,$//' | sed "s/,/'\",\"'/g")
+          echo "::set-output name=reviewers::'[$reviewers]'"
+
+      - name: Request Reviewers
         uses: octokit/request-action@v2.x
         with:
           route: POST /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers
-          reviewers: ${{ steps.reviewers.outputs.reviewers }}
+          reviewers: ${{ steps.add_reviewers.outputs.reviewers }}
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
