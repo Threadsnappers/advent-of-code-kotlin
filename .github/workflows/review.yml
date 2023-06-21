@@ -13,7 +13,7 @@ jobs:
         id: owners
         run: |
           owners=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/orgs/Threadsnappers/owners | jq -r '.[].login')
+          https://api.github.com/orgs/Threadsnappers/members?role=admin | jq -r '.[].login')
           echo "::set-output name=owners::$owners"
 
       - name: Get Pull Request Author
@@ -27,7 +27,15 @@ jobs:
       - name: Filter Reviewers
         id: reviewers
         run: |
-          echo "${{ steps.owners.outputs.owners }}" | tr ' ' '\n' | grep -v ${{ steps.author.outputs.author }} | tr '\n' ',' | sed 's/,$//' | echo "::set-output name=reviewers::$(cat)"
+          owners=($(echo "${{ steps.owners.outputs.owners }}"))
+          author="${{ steps.author.outputs.author }}"
+          reviewers=()
+          for owner in "${owners[@]}"; do
+            if [[ "$owner" != "$author" ]]; then
+              reviewers+=("$owner")
+            fi
+          done
+          echo "::set-output name=reviewers::${reviewers[*]}"
 
       - name: Add Reviewers
         uses: octokit/request-action@v2.x
