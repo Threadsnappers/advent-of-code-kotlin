@@ -33,13 +33,18 @@ jobs:
               reviewers+=("\"$owner\"")
             fi
           done
-          formatted_reviewers="[${reviewers[*]}]"
-          echo "::set-output name=reviewers::$formatted_reviewers"
+          echo "::set-output name=reviewers::${reviewers[*]}"
+
+      - name: Set Reviewers
+        id: set_reviewers
+        run: |
+          echo "::set-output name=reviewers::${{ steps.reviewers.outputs.reviewers }}"
 
       - name: Add Reviewers
         uses: octokit/request-action@v2.x
         with:
           route: POST /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers
-          reviewers: ${{ steps.reviewers.outputs.reviewers }}
+          mediaType: '{"previews":["squirrel-girl"]}'
+          reviewers: ${{ steps.set_reviewers.outputs.reviewers }}
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
