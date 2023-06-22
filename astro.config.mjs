@@ -23,6 +23,7 @@ export default defineConfig({
           autogenerate: { directory: 'aoc2022'}
         },
       ],
+      customCss: ['/src/assets/theme.css']
     }),
   ],
 });

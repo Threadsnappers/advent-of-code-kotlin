@@ -1,0 +1,95 @@
+/* SITE WIDE THEME DO NOT EDIT */
+:root[data-theme='dark'] { 
+    --sl-color-accent-high: #75ecd3; /* accent colour for dark mode */
+    --sl-color-bg-sidebar: transparent;
+    --sl-color-bg-nav: transparent;
+    --sl-color-hairline: rgba(173, 212, 204, 0.255)
+}
+:root[data-theme='light'] {
+    --sl-color-text-accent: #2c9780; /* accent colour for light mode */
+    --sl-color-bg-sidebar: transparent;
+    --sl-color-bg-nav: transparent;
+}
+
+
+/* Searchbar transparency */
+[data-has-hero], [data-has-sidebar] button[data-open-modal] { 
+    background-color: #ffffff21;
+    box-shadow: none;
+}
+
+
+/* Topbar transparency */
+[data-has-hero] header, [data-has-sidebar] header{
+    background-color: transparent;
+    backdrop-filter: blur(3px) brightness(0.98);
+    border-bottom: none;
+}
+
+/* Removes border of the "On this page" sidebar collapsible on mobile */
+nav {
+    border-top: none;
+}
+
+
+/* Changes the colour of the "On this page" button on mobile */
+[data-theme='light'] .toggle {
+    backdrop-filter: blur(3px);
+    background-color: rgba(255, 255, 255, 0.473);
+}
+
+[data-theme='dark'] .toggle {
+    backdrop-filter: blur(3px);
+    background-color: transparent;
+}
+
+
+/* CARDS TRANSPARENCY */
+[data-has-hero] .card {
+    background-color: #ffffff21;
+    border: none;
+}
+/* REMOVING BORDERS IN DOC PAGES */
+[data-has-sidebar] .sidebar-pane, .right-sidebar, summary {
+    border-inline: none;
+    border-bottom: none;
+}
+
+/* --- GRADIENT BACKGROUNDS --- */
+
+/* Dark theme landing page */
+[data-has-hero][data-theme='dark'] .page {
+    background: radial-gradient(circle farthest-side at 100% 0%, #be17e44f 0%, #9a3af431 20%, rgb(22, 32, 41) 75%);
+}
+/* [data-has-hero][data-theme='dark'] .page {
+    background: radial-gradient(circle farthest-side at 100% 0%, transparent -30% ,rgba(255, 227, 70, 0.342) 60%,rgba(17, 83, 134, 0.555) 100%);  
+} */
+
+/* Light theme landing page*/
+[data-has-hero][data-theme='light'] .page {
+    /* background: linear-gradient(45deg, rgba(213, 250, 206, 0.527) 25%, #9a3af425 70%, #e9aaf793 90%); */
+    /* background: linear-gradient(45deg, rgba(213, 250, 206, 0.527) 10%, #b183db8a 60%, #efb8fcb0 90%); */
+    /* background: linear-gradient(45deg, rgba(204, 248, 195, 0.527) 10%, #dbb8fc9f 75%, #d865f13d 90%); */
+    background: radial-gradient(circle farthest-side at 0% 100%, #ed485b4d 0%, #a94ec071 15%, #8052ff65 30%, transparent 100%),
+    radial-gradient(circle farthest-side at 0% 0%, #ed485b28 0%, #a94ec02f 15%, #8052ff2c 40%, transparent 70%);
+}   
+
+/* Dark theme code pages */
+[data-has-sidebar][data-theme='dark'] .page {
+    background: radial-gradient(circle farthest-corner at 100% 0%, #be17e44f 10%, #9a3af431 20%, rgb(22, 32, 41) 98%);
+}
+
+[data-has-sidebar][data-theme='dark'] .content-panel {
+    border-top: none;
+}
+
+
+/* Light theme code pages */
+[data-has-sidebar][data-theme='light'] .page {
+    /* background: linear-gradient(45deg, rgba(213, 250, 206, 0.527) 25%, #9a3af425 70%, #e9aaf793 90%); */
+    /* background: linear-gradient(45deg, rgba(213, 250, 206, 0.527) 10%, #b183db8a 60%, #efb8fcb0 90%); */
+    /* background: linear-gradient(45deg, rgba(204, 248, 195, 0.527) 10%, #dbb8fc9f 75%, #d865f13d 90%); */
+    background: radial-gradient(circle farthest-side at 0% 100%, #ed485b4d 0%, #a94ec071 15%, #8052ff65 30%, transparent 100%),
+    radial-gradient(circle farthest-side at 0% 0%, #ed485b28 0%, #a94ec02f 15%, #8052ff2c 40%, transparent 70%);
+}  
+
