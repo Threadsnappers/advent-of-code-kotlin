@@ -49,12 +49,21 @@ nav {
     background-color: #ffffff21;
     border: none;
 }
-/* REMOVING BORDERS IN DOC PAGES */
+/* REMOVING BORDERS IN DOC PAGES AND CHANGING BACKGROUND OF DAY MENU ON MOBILE */
 [data-has-sidebar] .sidebar-pane, .right-sidebar, summary {
     border-inline: none;
     border-bottom: none;
 }
 
+[data-has-sidebar][data-theme='dark'] .sidebar-pane {
+    background-color: rgba(6, 6, 7, 0.158);
+    backdrop-filter: blur(30px);
+}
+
+[data-has-sidebar][data-theme='light'] .sidebar-pane {
+    background-color: rgba(168, 168, 175, 0.089);
+    backdrop-filter: blur(20px);
+}
 /* --- GRADIENT BACKGROUNDS --- */
 
 /* Dark theme landing page */
