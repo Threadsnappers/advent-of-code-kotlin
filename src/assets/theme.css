@@ -50,8 +50,8 @@ nav {
     border: none;
 }
 /* REMOVING BORDERS IN DOC PAGES AND CHANGING BACKGROUND OF DAY MENU ON MOBILE */
-[data-has-sidebar] .sidebar-pane, .right-sidebar, summary {
-    border-inline: none;
+[data-has-sidebar] .sidebar-pane, .right-sidebar.right-sidebar.right-sidebar, summary {  /* Triple sidebarpain to increase specificity */
+    border-inline-start: none !important;
     border-bottom: none;
 }
 
