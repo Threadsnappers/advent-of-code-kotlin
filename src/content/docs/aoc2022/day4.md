@@ -158,7 +158,7 @@ fun splitInTwo(line: String): List<List<Int>> {
 }
 ```
 
-That's a wrap on Day4!
+That's a wrap on day 4!
 
 ## Full Solution
 
