@@ -13,14 +13,14 @@
 
 
 /* Searchbar transparency */
-[data-has-hero], [data-has-sidebar] button[data-open-modal] { 
+[data-has-hero] button[data-open-modal], [data-has-sidebar] button[data-open-modal] { 
     background-color: #ffffff21;
     box-shadow: none;
 }
 
 
 /* Topbar transparency */
-[data-has-hero] header, [data-has-sidebar] header{
+[data-has-hero] header, [data-has-sidebar] header {
     background-color: transparent;
     backdrop-filter: blur(3px) brightness(0.98);
     border-bottom: none;
