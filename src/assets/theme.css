@@ -3,12 +3,14 @@
     --sl-color-accent-high: #75ecd3; /* accent colour for dark mode */
     --sl-color-bg-sidebar: transparent;
     --sl-color-bg-nav: transparent;
-    --sl-color-hairline: rgba(173, 212, 204, 0.255)
+    --sl-color-hairline: rgba(173, 212, 204, 0.255);
+    --astro-code-color-background: #0e1a2454;
 }
 :root[data-theme='light'] {
     --sl-color-text-accent: #2c9780; /* accent colour for light mode */
     --sl-color-bg-sidebar: transparent;
     --sl-color-bg-nav: transparent;
+    --astro-code-color-background: #f1f7fc6b;
 }
 
 
@@ -20,12 +22,15 @@
 
 
 /* Topbar transparency */
-[data-has-hero] header, [data-has-sidebar] header {
-    background-color: transparent;
-    backdrop-filter: blur(3px) brightness(0.98);
+[data-has-hero][data-theme="dark"] header, [data-has-sidebar][data-theme="dark"] header {
+    background-color: #2b1d41;
     border-bottom: none;
 }
 
+[data-has-hero][data-theme="light"] header, [data-has-sidebar][data-theme="light"] header {
+    background-color: #f4deeb;
+    border-bottom: none;
+}
 /* Removes border of the "On this page" sidebar collapsible on mobile */
 nav {
     border-top: none;
@@ -105,3 +110,8 @@ nav {
     radial-gradient(circle farthest-side at 0% 0%, #ed485b28 0%, #a94ec02f 15%, #8052ff2c 40%, transparent 70%);
 }  
 
+/* CODEBLOCK THEME */
+[data-has-sidebar] .astro-code {
+    border: none;
+    border-radius: 10px;
+}
