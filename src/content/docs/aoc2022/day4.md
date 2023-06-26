@@ -33,7 +33,7 @@ This can be done by taking a count of the number of pairs in which the first ID 
 
 We'll be using a function `splitInTwo(line: String): List<List<Int>>` that takes in a `String` value as a parameter and returns a `List` of two lists containing two integers each.
 
-First let's do some splitting. 😉
+First we'll have to extract the required items.
 
 ##### Step 1 - The ***Main*** Split
 
@@ -71,7 +71,7 @@ line.split(",").let { it ->
 
 ### The Complete Function
 
-Adding a `return` statement to our code, we finally have our `splitInTwo()` function. Our `List` of lists is ready. 🤣
+Adding a `return` statement to our code, we finally have our `splitInTwo()` function.
 
 ```kotlin
 fun splitInTwo(line: String): List<List<Int>> {
@@ -158,7 +158,7 @@ fun splitInTwo(line: String): List<List<Int>> {
 }
 ```
 
-That's a wrap on day 4!
+That's a wrap on Day4!
 
 ## Full Solution
 
